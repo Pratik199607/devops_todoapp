@@ -4,8 +4,9 @@
 	"description": "todo app backend",
 	"main": "server.js",
 	"scripts": {
-		"dev": "node server.js",
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"dev": "pm2 start server.js --name \"todo-backend\"  --env production",
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"stop": "pm2 stop todo-backend"
 	},
 	"type": "module",
 	"author": "pratik bapat",
@@ -14,6 +15,7 @@
 		"cors": "^2.8.5",
 		"dotenv": "^16.5.0",
 		"express": "^5.1.0",
-		"mongoose": "^8.13.3"
+		"mongoose": "^8.13.3",
+		"pm2": "^6.0.5"
 	}
 }
