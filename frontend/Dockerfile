@@ -1,28 +1,19 @@
-# Build Stage: Use Node.js Alpine image to build the app
-FROM node:20-alpine3.21 AS build
+# Stage 1: Build the React app (with minimal dependencies)
+FROM node:20-alpine3.21
 
-# Set working directory
+# Set the working directory
 WORKDIR /app
 
-# Copy package files and install dependencies
-COPY package*.json ./
-RUN npm install --legacy-peer-deps
+# Copy only the package files (package.json and package-lock.json) first for caching purposes
+COPY package.json package-lock.json ./
 
-# Copy application source code
+# Install only the production dependencies
+RUN npm install 
+
 COPY . .
-
-# Build the application for production
-RUN npm run build
-
-# Runtime Stage: Use Nginx Alpine image to serve the built app
-FROM nginx:alpine
-
-# Copy built files from the build stage
-COPY --from=build /app/dist /usr/share/nginx/html
-
-# Expose the port the app runs on
+# Expose the Vite default dev server port
 EXPOSE 3000
 
-# Start Nginx server
-CMD ["nginx", "-g", "daemon off;"]
+# Start the Vite development server
+CMD ["npm", "run", "dev"]
 
