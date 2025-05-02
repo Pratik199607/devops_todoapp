@@ -1,0 +1,79 @@
+@keyframes slide-in {
+	0% {
+		transform: translateX(100%);
+		opacity: 0;
+	}
+	100% {
+		transform: translateX(0);
+		opacity: 1;
+	}
+}
+
+.animate-slide-in {
+	animation: slide-in 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fade-in {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+.animate-fade-in {
+	animation: fade-in 0.2s ease-out forwards;
+}
+
+/* Custom spinner */
+.loader {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.spinner {
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	border: 3px solid rgba(139, 92, 246, 0.1);
+	border-top-color: #8b5cf6;
+	animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+/* Empty state icon */
+.empty-state-icon {
+	width: 60px;
+	height: 60px;
+	border-radius: 50%;
+	background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.empty-state-icon::before {
+	content: "";
+	position: absolute;
+	width: 24px;
+	height: 3px;
+	background-color: white;
+	border-radius: 2px;
+}
+
+.empty-state-icon::after {
+	content: "";
+	position: absolute;
+	width: 3px;
+	height: 24px;
+	background-color: white;
+	border-radius: 2px;
+}
