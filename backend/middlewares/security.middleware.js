@@ -20,11 +20,3 @@ export const configureCors = (allowedDomains) =>
 		},
 		credentials: true,
 	});
-
-
-{ "_id": "6833f93299030f0d63cc5b1d", "email": "user@example.com", "username": "user1", "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MzNmOTMyOTkwMzBmMGQ2M2NjNWIxZCIsImlhdCI6MTc0ODIzNjU5NCwiZXhwIjoxNzQ4MjQwMTk0fQ.f_lTQM9guBQ05TMyUsfhQ_rmLV4p5b8L-MZJQ-O3XCc" }
-	
-curl -X DELETE http://localhost:5000/api/todos/6833f9a599030f0d63cc5b20 \
-  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MzNmOTMyOTkwMzBmMGQ2M2NjNWIxZCIsImlhdCI6MTc0ODIzNjU5NCwiZXhwIjoxNzQ4MjQwMTk0fQ.f_lTQM9guBQ05TMyUsfhQ_rmLV4p5b8L-MZJQ-O3XCc" 
-
-
