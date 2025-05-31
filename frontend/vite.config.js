@@ -11,8 +11,11 @@ export default defineConfig({
 		port: 3000,
 		proxy: {
 			"/api": {
-				target: "http://192.168.0.150:5000",
+				target: "http://localhost:5000",
 			},
 		},
+	},
+	define: {
+		"globalThis.caches": "undefined", // Prevents ReferenceError in dev
 	},
 });
