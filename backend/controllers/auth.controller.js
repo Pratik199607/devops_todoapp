@@ -1,5 +1,6 @@
 import User from "../models/user.model.js";
 import generateToken from "../utils/generateToken.js";
+import bcrypt from "bcryptjs";
 
 export const registerUser = async (req, res) => {
 	const { email, username, password } = req.body;
@@ -55,6 +56,14 @@ export const forgotPassword = async (req, res) => {
 	const user = await User.findOne({ username });
 
 	if (!user) return res.status(404).json({ message: "User not found" });
+
+	// Compare new password with existing hashed password
+	const isSamePassword = await bcrypt.compare(newPassword, user.password);
+	if (isSamePassword) {
+		return res
+			.status(400)
+			.json({ message: "New password must be different from the current password" });
+	}
 
 	user.password = newPassword; // This will be hashed by pre-save middleware
 	await user.save();

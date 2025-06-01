@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import axios from "axios";
-import { handleApiError, isAuthError } from "../utils/errorHandler";
+import { handleApiError } from "../utils/errorHandler";
 import { validateEmail, validateUsername, validatePassword } from "../utils/validation";
 
 const AuthContext = createContext();
@@ -123,7 +123,7 @@ export function AuthProvider({ children }) {
 				password: userData.password,
 			});
 
-			const { token: newToken, user: newUser } = response.data;
+			const { token: newToken, username: newUser } = response.data;
 
 			if (!newToken || !newUser) {
 				throw new Error("Invalid response from server");
@@ -160,7 +160,7 @@ export function AuthProvider({ children }) {
 		try {
 			setLoading(true);
 			setError(null);
-
+			console.log("inside auth comntext", userData);
 			// Validate input
 			const usernameError = validateUsername(userData.username);
 			const passwordError = validatePassword(userData.newPassword);
@@ -179,11 +179,11 @@ export function AuthProvider({ children }) {
 				};
 			}
 
-			await axios.post("/api/auth/forgot-password", {
+			let response = await axios.post("/api/auth/forgot-password", {
 				username: userData.username.trim(),
 				newPassword: userData.newPassword,
 			});
-
+			console.log(response.data);
 			return { success: true };
 		} catch (error) {
 			const errorMessage = handleApiError(error, "Password reset failed");
