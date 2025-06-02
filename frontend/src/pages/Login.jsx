@@ -5,7 +5,7 @@ import { ThemeToggle } from "../components/ThemeToggle";
 import { useTheme } from "../components/ThemeProvider";
 import { validateUsername, validatePassword } from "../utils/validation";
 import { LuEye, LuEyeOff, LuArrowLeft, LuCircleAlert, LuListTodo } from "react-icons/lu";
-import { toast, Bounce } from "react-toastify";
+import Toast from "../components/Toast";
 
 const Login = () => {
 	const [formData, setFormData] = useState({
@@ -44,17 +44,7 @@ const Login = () => {
 		e.preventDefault();
 		if (!validateForm()) {
 			clearError();
-			toast.error(`Please fix the form errors `, {
-				position: "bottom-right",
-				autoClose: 5000,
-				hideProgressBar: true,
-				closeOnClick: true,
-				pauseOnHover: true,
-				draggable: true,
-				progress: undefined,
-				theme: theme == "system" ? "light" : theme,
-				transition: Bounce,
-			});
+			Toast.error(`Please fix the form errors `, theme);
 			return;
 		}
 
@@ -64,43 +54,22 @@ const Login = () => {
 		try {
 			const result = await login(formData);
 			if (result.success) {
-				toast.success("Login successful! Welcome back.", {
-					position: "bottom-right",
-					autoClose: 5000,
-					hideProgressBar: true,
-					closeOnClick: true,
-					pauseOnHover: true,
-					draggable: true,
-					progress: undefined,
-					theme: theme == "system" ? "light" : theme,
-					transition: Bounce,
-				});
+				Toast.success(
+					<span>
+						Login successful! Welcome back{" "}
+						<b>
+							<i>{formData.username}</i>
+						</b>
+						.
+					</span>,
+					theme
+				);
 				navigate("/todos");
 			} else {
-				toast.error(result.error, {
-					position: "bottom-right",
-					autoClose: 5000,
-					hideProgressBar: true,
-					closeOnClick: true,
-					pauseOnHover: true,
-					draggable: true,
-					progress: undefined,
-					theme: theme == "system" ? "light" : theme,
-					transition: Bounce,
-				});
+				Toast.error(result.error, theme);
 			}
 		} catch (error) {
-			toast.error(`An unexpected error occurred. Please try again. ${error}`, {
-				position: "bottom-right",
-				autoClose: 5000,
-				hideProgressBar: true,
-				closeOnClick: true,
-				pauseOnHover: true,
-				draggable: true,
-				progress: undefined,
-				theme: theme == "system" ? "light" : theme,
-				transition: Bounce,
-			});
+			Toast.error(`An unexpected error occurred. Please try again. ${error}`, theme);
 		} finally {
 			setLoading(false);
 		}

@@ -5,7 +5,7 @@ import { ThemeToggle } from "../components/ThemeToggle";
 import { useTheme } from "../components/ThemeProvider";
 import { validateUsername, validatePassword, validateEmail } from "../utils/validation";
 import { LuEye, LuEyeOff, LuArrowLeft, LuCircleAlert, LuListTodo } from "react-icons/lu";
-import { toast, Bounce } from "react-toastify";
+import Toast from "../components/Toast";
 
 const Register = () => {
 	const [formData, setFormData] = useState({
@@ -53,17 +53,7 @@ const Register = () => {
 		e.preventDefault();
 		if (!validateForm()) {
 			clearError();
-			toast.error(`Please fix the form errors `, {
-				position: "bottom-right",
-				autoClose: 5000,
-				hideProgressBar: true,
-				closeOnClick: true,
-				pauseOnHover: true,
-				draggable: true,
-				progress: undefined,
-				theme: theme == "system" ? "light" : theme,
-				transition: Bounce,
-			});
+			Toast.error(`Please fix the form errors `, theme);
 			return;
 		}
 
@@ -73,7 +63,7 @@ const Register = () => {
 		try {
 			const result = await register(formData);
 			if (result.success) {
-				toast.success(
+				Toast.success(
 					<span>
 						Registration Successful!
 						<br />
@@ -83,44 +73,14 @@ const Register = () => {
 						</b>
 						.
 					</span>,
-					{
-						position: "bottom-right",
-						autoClose: 5000,
-						hideProgressBar: true,
-						closeOnClick: true,
-						pauseOnHover: true,
-						draggable: true,
-						progress: undefined,
-						theme: theme == "system" ? "light" : theme,
-						transition: Bounce,
-					}
+					theme
 				);
 				navigate("/todos");
 			} else {
-				toast.error(result.error, {
-					position: "bottom-right",
-					autoClose: 5000,
-					hideProgressBar: true,
-					closeOnClick: true,
-					pauseOnHover: true,
-					draggable: true,
-					progress: undefined,
-					theme: theme == "system" ? "light" : theme,
-					transition: Bounce,
-				});
+				Toast.error(result.error, theme);
 			}
 		} catch (error) {
-			toast.error(`An unexpected error occurred. Please try again. ${error}`, {
-				position: "bottom-right",
-				autoClose: 5000,
-				hideProgressBar: true,
-				closeOnClick: true,
-				pauseOnHover: true,
-				draggable: true,
-				progress: undefined,
-				theme: theme == "system" ? "light" : theme,
-				transition: Bounce,
-			});
+			Toast.error(`An unexpected error occurred. Please try again. ${error}`, theme);
 		} finally {
 			setLoading(false);
 		}

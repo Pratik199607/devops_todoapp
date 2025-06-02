@@ -5,7 +5,7 @@ import { ThemeToggle } from "../components/ThemeToggle";
 import { useTheme } from "../components/ThemeProvider";
 import { validateUsername, validatePassword } from "../utils/validation";
 import { LuEye, LuEyeOff, LuArrowLeft, LuCircleAlert, LuListTodo } from "react-icons/lu";
-import { toast, Bounce } from "react-toastify";
+import Toast from "../components/Toast";
 
 const ForgotPassword = () => {
 	const [formData, setFormData] = useState({
@@ -49,17 +49,18 @@ const ForgotPassword = () => {
 		e.preventDefault();
 		if (!validateForm()) {
 			clearError();
-			toast.error(`Please fix the form errors `, {
-				position: "bottom-right",
-				autoClose: 5000,
-				hideProgressBar: true,
-				closeOnClick: true,
-				pauseOnHover: true,
-				draggable: true,
-				progress: undefined,
-				theme: theme == "system" ? "light" : theme,
-				transition: Bounce,
-			});
+			Toast.error(`Please fix the form errors `, theme);
+			// toast.error(`Please fix the form errors `, {
+			// 	position: "bottom-right",
+			// 	autoClose: 5000,
+			// 	hideProgressBar: true,
+			// 	closeOnClick: true,
+			// 	pauseOnHover: true,
+			// 	draggable: true,
+			// 	progress: undefined,
+			// 	theme: theme == "system" ? "light" : theme,
+			// 	transition: Bounce,
+			// });
 			return;
 		}
 
@@ -70,43 +71,55 @@ const ForgotPassword = () => {
 			console.log(formData);
 			const result = await forgotPassword(formData);
 			if (result.success) {
-				toast.success(`Password reset successful for ${formData.username}`, {
-					position: "bottom-right",
-					autoClose: 5000,
-					hideProgressBar: true,
-					closeOnClick: true,
-					pauseOnHover: true,
-					draggable: true,
-					progress: undefined,
-					theme: theme == "system" ? "light" : theme,
-					transition: Bounce,
-				});
+				Toast.success(
+					<span>
+						Password reset successful for{" "}
+						<b>
+							<i>{formData.username}</i>
+						</b>
+						.
+					</span>,
+					theme
+				);
+				// toast.success(`Password reset successful for ${formData.username}`, {
+				// 	position: "bottom-right",
+				// 	autoClose: 5000,
+				// 	hideProgressBar: true,
+				// 	closeOnClick: true,
+				// 	pauseOnHover: true,
+				// 	draggable: true,
+				// 	progress: undefined,
+				// 	theme: theme == "system" ? "light" : theme,
+				// 	transition: Bounce,
+				// });
 				navigate("/login");
 			} else {
-				toast.error(result.error, {
-					position: "bottom-right",
-					autoClose: 5000,
-					hideProgressBar: true,
-					closeOnClick: true,
-					pauseOnHover: true,
-					draggable: true,
-					progress: undefined,
-					theme: theme == "system" ? "light" : theme,
-					transition: Bounce,
-				});
+				Toast.error(result.error, theme);
+				// toast.error(result.error, {
+				// 	position: "bottom-right",
+				// 	autoClose: 5000,
+				// 	hideProgressBar: true,
+				// 	closeOnClick: true,
+				// 	pauseOnHover: true,
+				// 	draggable: true,
+				// 	progress: undefined,
+				// 	theme: theme == "system" ? "light" : theme,
+				// 	transition: Bounce,
+				// });
 			}
 		} catch (error) {
-			toast.error(`An unexpected error occurred. Please try again. ${error}`, {
-				position: "bottom-right",
-				autoClose: 5000,
-				hideProgressBar: true,
-				closeOnClick: true,
-				pauseOnHover: true,
-				draggable: true,
-				progress: undefined,
-				theme: theme == "system" ? "light" : theme,
-				transition: Bounce,
-			});
+			Toast.error(`An unexpected error occurred. Please try again. ${error}`, theme);
+			// toast.error(`An unexpected error occurred. Please try again. ${error}`, {
+			// 	position: "bottom-right",
+			// 	autoClose: 5000,
+			// 	hideProgressBar: true,
+			// 	closeOnClick: true,
+			// 	pauseOnHover: true,
+			// 	draggable: true,
+			// 	progress: undefined,
+			// 	theme: theme == "system" ? "light" : theme,
+			// 	transition: Bounce,
+			// });
 		} finally {
 			setLoading(false);
 		}
